@@ -1,0 +1,13 @@
+# Check if config option is defined and use it, otherwise
+# default to module for host built targets
+ifneq ($(CONFIG_ML_MERO_SMMU),)
+  BUILD_MERO_SMMU := $(CONFIG_ML_MERO_SMMU)
+else
+  BUILD_MERO_SMMU := m
+endif
+
+obj-$(BUILD_MERO_SMMU) += mero_smmu.o
+
+ccflags-y := -Wall -Werror
+ccflags-y += -I$(srctree)/$(src)/../include
+ccflags-y += -I$(srctree)/include/linux/cvip

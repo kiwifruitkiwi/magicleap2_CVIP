@@ -1,0 +1,16 @@
+# Make sure to clean before we copy over the contents.
+/extra/dlaw/repo_cvip_r8/build/tooling/utilities/bin/make -C /extra/dlaw/repo_cvip_r8/output/amd/userdebug/kernel M=/extra/dlaw/repo_cvip_r8/leapcore/cvcore/kernel/cvip/hcsm clean
+make[1]: Entering directory '/extra/dlaw/repo_cvip_r8/output/amd/userdebug/kernel'
+make[1]: Leaving directory '/extra/dlaw/repo_cvip_r8/output/amd/userdebug/kernel'
+if [ ! -d /extra/dlaw/repo_cvip_r8/output/cvcore/userdebug/cvip/hcsm/arm ]; then mkdir -p /extra/dlaw/repo_cvip_r8/output/cvcore/userdebug/cvip/hcsm/arm; fi
+cp -R * /extra/dlaw/repo_cvip_r8/output/cvcore/userdebug/cvip/hcsm/arm
+/extra/dlaw/repo_cvip_r8/build/tooling/utilities/bin/make -C /extra/dlaw/repo_cvip_r8/output/amd/userdebug/kernel M=/extra/dlaw/repo_cvip_r8/output/cvcore/userdebug/cvip/hcsm/arm CC="/extra/dlaw/repo_cvip_r8/build/tooling/ccache/linux-x86/ccache aarch64-linux-gnu-gcc" modules
+make[1]: Entering directory '/extra/dlaw/repo_cvip_r8/output/amd/userdebug/kernel'
+  CC [M]  /extra/dlaw/repo_cvip_r8/output/cvcore/userdebug/cvip/hcsm/arm/main.o
+  CC [M]  /extra/dlaw/repo_cvip_r8/output/cvcore/userdebug/cvip/hcsm/arm/stats.o
+  CC [M]  /extra/dlaw/repo_cvip_r8/output/cvcore/userdebug/cvip/hcsm/arm/attributes.o
+  LD [M]  /extra/dlaw/repo_cvip_r8/output/cvcore/userdebug/cvip/hcsm/arm/hcsm.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  LD [M]  /extra/dlaw/repo_cvip_r8/output/cvcore/userdebug/cvip/hcsm/arm/hcsm.ko
+make[1]: Leaving directory '/extra/dlaw/repo_cvip_r8/output/amd/userdebug/kernel'

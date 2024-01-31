@@ -1,0 +1,31 @@
+/**
+* \file cvcore_common.h
+*
+* \brief CVCore Address space map
+*/
+
+#pragma once
+
+#define OUTPUT_ADDR_COMMON  \
+    <0x0 0xDB000000>,       \
+    <0x1 0x02dd9000>,       \
+    <0x0 0xC0000000>,       \
+    <0x0 0xD0800000>
+
+#define MAP_SIZE_COMMON \
+    <0x0 0x1000>,       \
+    <0x0 0x1000>,       \
+    <0x0 0x800000>,     \
+    <0x0 0x1000>
+
+#define INPUT_ADDR_COMMON   \
+    <0x0 0x00001000>,       \
+    <0x0 0x00004000>,       \
+    <0x0 0x00008000>,       \
+    <0x0 0x00006000>
+
+#define MAP_PROT_COMMON \
+    <0x0 0x3>,          \
+    <0x0 0x3>,          \
+    <0x0 0x3>,          \
+    <0x0 0x3>

@@ -1,0 +1,31 @@
+# Check if config option is defined and use it, otherwise
+# default to module for host built targets
+ifneq ($(CONFIG_ML_SHREGION),)
+  BUILD_SHREGION := $(CONFIG_ML_SHREGION)
+  ifeq ($(TARGET_PRODUCT), $(filter acamas%, $(TARGET_PRODUCT)))
+    shregion-$(BUILD_SHREGION) += shregion_core.o
+    shregion-$(BUILD_SHREGION) += shregion_common.o
+  else
+    shregion-$(BUILD_SHREGION) += shregion_mero_x86_core.o
+    shregion-$(BUILD_SHREGION) += shregion_common.o
+    ccflags-y += -I$(srctree)/$(src)/../mero_xpc/include
+  endif
+else
+  BUILD_SHREGION := m
+  ifeq ($(CVCORE_PLATFORM), $(filter $(CVCORE_PLATFORM), $(CVCORE_ARM_PLATFORMS)))
+    shregion-$(BUILD_SHREGION) += shregion_common.o
+    KBUILD_EXTRA_SYMBOLS = ${CVCORE_OUT}/mero_xpc/arm/kernel/Module.symvers
+  endif
+  shregion-$(BUILD_SHREGION) += shregion_core.o
+endif
+
+obj-$(BUILD_SHREGION) += shregion.o
+
+ccflags-y += -I$(srctree)/$(src)/../include
+ccflags-y += -I$(srctree)/include/linux/cvip
+ifneq ($(CVCORE_PLATFORM),)
+  ifeq ($(CVCORE_PLATFORM), $(filter $(CVCORE_PLATFORM), $(CVCORE_ARM_PLATFORMS)))
+    ccflags-y += -I$(srctree)/drivers/staging/android
+    ccflags-y += -DARM_CVIP
+  endif
+endif

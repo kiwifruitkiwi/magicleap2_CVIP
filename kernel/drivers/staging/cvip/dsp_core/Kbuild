@@ -1,0 +1,19 @@
+# Check if config option is defined and use it, otherwise
+# default to module for host built targets
+ifneq ($(CONFIG_ML_DSP_CORE),)
+  BUILD_DSP_CORE := $(CONFIG_ML_DSP_CORE)
+else
+  BUILD_DSP_CORE := m
+endif
+
+obj-$(BUILD_DSP_CORE) += dsp_core.o
+dsp_core-y := dsp_core_kapi.o
+dsp_core-y += dsp_core_control_packets.o dsp_core_response_packets.o
+dsp_core-y += dsp_core_status_packets.o
+dsp_core-y += dsp_core_task_control_kapi.o
+dsp_core-y += dsp_core_task_manager_kapi.o
+
+ccflags-y := -Wall -Werror
+ccflags-y += -I$(srctree)/$(src)/../include
+ccflags-y += -I$(srctree)/include/linux/cvip
+ccflags-y += -I$(srctree)/include/uapi/linux/cvip

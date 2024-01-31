@@ -1,0 +1,29 @@
+# Check if config option is defined and use it, otherwise
+# default to module for host built targets
+ifneq ($(CONFIG_ML_MERO_NOTIFIER),)
+  BUILD_MERO_NOTIFIER := $(CONFIG_ML_MERO_NOTIFIER)
+  ifeq ($(TARGET_PRODUCT), $(filter demophon%, $(TARGET_PRODUCT)))
+    ccflags-y += -DX86_MERO
+    ccflags-y += -I$(srctree)/$(src)/../mero_xpc/include
+  endif
+else
+  BUILD_MERO_NOTIFIER := m
+  ifeq ($(CVCORE_PLATFORM), $(filter $(CVCORE_PLATFORM), $(CVCORE_ARM_PLATFORMS)))
+    KBUILD_EXTRA_SYMBOLS = ${CVCORE_OUT}/mero_xpc/arm/kernel/Module.symvers
+  endif
+endif
+
+obj-$(BUILD_MERO_NOTIFIER) += mero_notifier.o
+
+mero_notifier-y += mero_notifier_core.o
+
+ccflags-y += -Wall -Werror
+ccflags-y += -I$(srctree)/$(src)/../include
+ccflags-y += -I$(srctree)/include/linux/cvip
+ccflags-y += -I$(srctree)/include/uapi
+ifneq ($(CVCORE_PLATFORM),)
+  ifeq ($(CVCORE_PLATFORM), $(filter $(CVCORE_PLATFORM), $(CVCORE_ARM_PLATFORMS)))
+    ccflags-y += -I$(srctree)/drivers/staging/android
+    ccflags-y += -DARM_CVIP
+  endif
+endif

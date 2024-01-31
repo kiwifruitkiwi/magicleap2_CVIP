@@ -1,0 +1,14 @@
+# Check if config option is defined and use it, otherwise
+# default to module for host built targets
+ifneq ($(CONFIG_ML_CVCORE_TRACE),)
+  BUILD_CVCORE_TRACE := $(CONFIG_ML_CVCORE_TRACE)
+else
+  BUILD_CVCORE_TRACE := m
+endif
+
+obj-$(BUILD_CVCORE_TRACE) += cvcore_trace_kapi.o
+gsm-y := cvcore_trace_kapi.o
+
+ccflags-y := -Wall -Werror
+ccflags-y += -I$(srctree)/$(src)/../include
+ccflags-y += -I$(srctree)/include/linux/cvip

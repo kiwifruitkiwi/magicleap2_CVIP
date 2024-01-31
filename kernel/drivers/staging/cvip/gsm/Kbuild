@@ -1,0 +1,14 @@
+# Check if config option is defined and use it, otherwise
+# default to module for host built targets
+ifneq ($(CONFIG_ML_GSM),)
+  BUILD_GSM := $(CONFIG_ML_GSM)
+else
+  BUILD_GSM := m
+endif
+
+obj-$(BUILD_GSM) += gsm.o
+gsm-y := gsm_core.o gsm_spinlock.o gsm_jrtc.o
+
+ccflags-y := -Wall -Werror
+ccflags-y += -I$(srctree)/$(src)/../include
+ccflags-y += -I$(srctree)/include/linux/cvip

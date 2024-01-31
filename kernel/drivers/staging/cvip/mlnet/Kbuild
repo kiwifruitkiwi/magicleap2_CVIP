@@ -1,0 +1,28 @@
+# Check if config option is defined and use it, otherwise
+# default to module for host built targets
+ifneq ($(CONFIG_ML_MLNET),)
+  # This kernel module is only needed on demophon/mero
+  ifeq ($(TARGET_PRODUCT), $(filter demophon%, $(TARGET_PRODUCT)))
+    BUILD_MLNET := $(CONFIG_ML_MLNET)
+  endif
+else
+  BUILD_MLNET := m
+endif
+
+obj-$(BUILD_MLNET) += mlnet.o
+
+ccflags-y := -Wall -Werror
+
+# Uncomment to allow automatically bringing up the interface after the
+# kernel module is loaded. Only for testing purposes.
+#ccflags-y += -DMLNET_AUTO_LOAD
+ccflags-y += -I$(srctree)/$(src)/../include
+ccflags-y += -I$(srctree)/include/linux/cvip
+ifneq ($(CVCORE_PLATFORM),)
+  ifeq ($(CVCORE_PLATFORM), $(filter $(CVCORE_PLATFORM), $(CVCORE_ARM_PLATFORMS)))
+    # CVIP only flags
+    ccflags-y += -DMLNET_ARM
+    ccflags-y += -I$(srctree)/drivers/staging/android
+  endif
+endif
+

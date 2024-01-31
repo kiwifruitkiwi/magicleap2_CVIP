@@ -1,0 +1,12 @@
+CVIP Platform Driver Device Tree Bindings
+-------------------------------------------
+
+Required properties:
+- compatible		: Should be "amd,cvip-plt"
+
+Example:
+	cvip_plt: cvip_plt@0 {
+		status = "ok";
+		compatible = "amd,cvip-plt";
+	};
+

@@ -1,0 +1,14 @@
+TREE_TOP = ${HOME}/magicleap
+KERNEL_TOP = ${TREE_TOP}/kernel
+HYDRA_TOP = ${TREE_TOP}/hydra_modules
+
+obj-m += hcsm.o
+hcsm-y += main.o stats.o attributes.o
+
+# for cvip
+KBUILD_EXTRA_SYMBOLS = ${KERNEL_TOP}/modules/hydra/arm/kernel/Module.symvers
+# KBUILD_EXTRA_SYMBOLS += ${AMD_OUT_KERNEL}/Module.symvers
+
+ccflags-y += -I${HYDRA_TOP}/hydra
+ccflags-y += -I${KERNEL_TOP}/include/linux/cvip
+ccflags-y += -I${KERNEL_TOP}/include/linux/cvip/hydra
